@@ -21,8 +21,8 @@ def suggest_fingering(notes: list[int], cost_fn = transition_cost) -> list[int]:
                 total_cost = best_path[i-1][previous_finger] + cost_fn(prev_note, previous_finger, current_note, f)
                 if total_cost < best_total_cost:
                     best_previous_finger, best_total_cost = previous_finger, total_cost
-                row[f] = best_total_cost
-                par[f] = best_previous_finger
+            row[f] = best_total_cost
+            par[f] = best_previous_finger
         best_path.append(row)
         parent.append(par)
             
