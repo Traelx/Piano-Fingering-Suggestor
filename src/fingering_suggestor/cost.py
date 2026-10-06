@@ -90,7 +90,7 @@ def start_cost(note: int, finger: int) -> float: # cost for first finger
     new_note = new_key_position(note)
 
     if is_black(new_note) and finger == 1:
-        return 5
+        return 0.5
     if finger == 4:
         return 1.0
     return 0.0
@@ -99,13 +99,17 @@ def start_cost(note: int, finger: int) -> float: # cost for first finger
 def transition_cost(prev_note: int, prev_finger: int, note: int, finger: int) -> float:
     cost = 0.0 
 
-    if prev_finger == finger:
+    if prev_finger == finger and prev_note != note:
         return 500.0
+    elif prev_finger == finger:
+        return 0.0 
+    elif prev_finger != finger and prev_note == note:
+        return 1.0
     
     new_note, new_prev_note = new_key_position(note), new_key_position(prev_note)
 
     if is_black(new_note) and finger == 1:
-        cost += 5
+        cost += 0.5
     if finger == 4:
         cost += 1.0
 

@@ -1,5 +1,5 @@
 from .dp import suggest_fingering
-
+from . import music_import
 NOTE_NAMES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
 
 
