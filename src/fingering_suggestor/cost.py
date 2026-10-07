@@ -47,6 +47,9 @@ def triple_cost(prev_prev_note, prev_prev_finger, prev_note, prev_finger, note, 
     if prev_prev_finger == finger:
         if first != last and middle_is_between:
             cost += 3
+        # same finger on a different key = the hand moved
+        if first != last:
+            cost += 1 + abs(last - first) * 0.5
         return cost
 
     # distance between 1st and 3rd note
