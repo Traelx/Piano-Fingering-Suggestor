@@ -1,7 +1,7 @@
 [project]
 name = "fingering-suggestor"
 version = "0.1.0"
-description = "Add your description here"
+description = "Suggests piano fingerings for MusicXML sheet music"
 readme = "README.md"
 authors = [
     { name = "Travis Xiong", email = "travisxiong19@gmail.com" }

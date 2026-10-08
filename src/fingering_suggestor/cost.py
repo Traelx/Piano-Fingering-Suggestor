@@ -1,30 +1,16 @@
-# Parncutt converted to key positions (x 14/12, rounded) to scale
-FINGER_SPANS = {
-    (1, 2): (-8, -6, 1, 4, 9, 12),
-    (1, 3): (-7, -5, 4, 7, 12, 14),
-    (1, 4): (-5, -2, 6, 9, 13, 15),
-    (1, 5): (-2, 0, 8, 12, 14, 16),
-    (2, 3): (1, 1, 1, 2, 5, 7),
-    (2, 4): (1, 1, 4, 5, 7, 9),
-    (2, 5): (2, 2, 6, 7, 9, 12),
-    (3, 4): (1, 1, 1, 2, 3, 5),
-    (3, 5): (1, 1, 4, 5, 7, 9),
-    (4, 5): (1, 1, 1, 2, 5, 7),
-}
 
-# old table, original Parncutt
-# FINGER_SPANS = {
-#     (1, 2): (-7, -5, 1, 3, 8, 10),
-#     (1, 3): (-6, -4, 3, 6, 10, 12),
-#     (1, 4): (-4, -2, 5, 8, 11, 13),
-#     (1, 5): (-2, 0, 7, 10, 12, 14),
-#     (2, 3): (1, 1, 1, 2, 4, 6),
-#     (2, 4): (1, 1, 3, 4, 6, 8),
-#     (2, 5): (2, 2, 5, 6, 8, 10),
-#     (3, 4): (1, 1, 1, 2, 2, 4),
-#     (3, 5): (1, 1, 3, 4, 6, 8),
-#     (4, 5): (1, 1, 1, 2, 4, 6),
-# }
+FINGER_SPANS = {
+    (1, 2): (-7, -5, 1, 3, 8, 10),
+    (1, 3): (-6, -4, 3, 6, 10, 12),
+    (1, 4): (-4, -2, 5, 8, 11, 13),
+    (1, 5): (-2, 0, 7, 10, 12, 14),
+    (2, 3): (1, 1, 1, 2, 4, 6),
+    (2, 4): (1, 1, 3, 4, 6, 8),
+    (2, 5): (2, 2, 5, 6, 8, 10),
+    (3, 4): (1, 1, 1, 2, 2, 4),
+    (3, 5): (1, 1, 3, 4, 6, 8),
+    (4, 5): (1, 1, 1, 2, 4, 6),
+}
 
 KEY_POSITIONS = [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13]
 
@@ -59,11 +45,11 @@ def triple_cost(prev_prev_note, prev_prev_finger, prev_note, prev_finger, note, 
 
     min_prac, min_comf, min_rel, max_rel, max_comf, max_prac = FINGER_SPANS[(min(prev_prev_finger, finger), max(prev_prev_finger, finger))]
 
-    if span < min_comf or span > max_comf: # 1st and 3rd note don't fit in a comfortable stretch, hand had to move
+    if span < min_comf or span > max_comf: #large gap 
         cost += 1  # rule 3: hand position change
-        cost += abs(span - min_comf if span < min_comf else span - max_comf)  # rule 4: size of the change
+        cost += abs(span - min_comf if span < min_comf else span - max_comf)  # rule 4: gap between 1st and 3rd note is large
         if prev_finger == 1 and middle_is_between and (span < min_prac or span > max_prac):
-            cost += 1  # rule 3: thumb in the middle and a very big change
+            cost += 1  # rule 3: thumb in the middle and big gap 
 
     # rule 3: 1st and 3rd note same key but different fingers (back and forth), +1
     if first == last:
@@ -133,7 +119,7 @@ def transition_cost(prev_note: int, prev_finger: int, note: int, finger: int) ->
     if finger == 4: # weak 4th finger, +1
         cost += 1.0
 
-    # 
+    # figure out which finger is the higher 
     if prev_finger > finger:
         higher_finger = (prev_finger, new_prev_note)
         lower_finger = (finger, new_note)
